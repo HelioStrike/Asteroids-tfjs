@@ -9,3 +9,6 @@ var left_canvas = null;
 var right_canvas = null;
 var left_control = null;
 var right_control = null;
+var train_btn = document.getElementById("train");
+var loss_text = document.getElementById("loss");
+var EPOCHS = 200;

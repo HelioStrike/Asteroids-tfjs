@@ -4,7 +4,7 @@
     <title>main</title>
     <link rel="stylesheet" type="text/css" href="src/css/main.css">
     <link rel="stylesheet" type="text/css" href="src/css/semantic.min.css">
-    <script src="src/js/tf.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"> </script>
 </head>
 <body>
     <div class="ui centered grid" id="real-wrapper">
@@ -23,6 +23,9 @@
                     <canvas id="right-control">
                     </canvas>                              
                 </div>
+
+                <button id="train">Train</button>
+                <p id="loss">Loss: </p>
             </div>
     
             <div id="game">
