@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>main</title>
+    <link rel="stylesheet" type="text/css" href="src/css/main.css">
+    <link rel="stylesheet" type="text/css" href="src/css/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.13.3/dist/tf.min.js"> </script>
+</head>
+<body>
+    <div class="ui centered grid" id="real-wrapper">
+        <div id="wrapper">
+            <div id="control-ui">
+                <div class="ui huge header" id="title">Asteroids</div>
+                <div class="camera">
+                    <video id="video">Video stream not available.</video>
+                    <p>Click on the left and right boxes to assign controls.</p>
+                </div>
+                
+                <div id="controls">
+                    <canvas id="left-control">
+                    </canvas>
+
+                    <canvas id="right-control">
+                    </canvas>                              
+                </div>
+            </div>
+    
+            <div id="game">
+    
+    
+            </div>
+        </div>
+    </div>
+
+    <script src="src/js/camera.js"></script>
+    <script src="src/js/ml.js"></script>
+    
+</body>
+</html>
