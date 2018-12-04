@@ -1,11 +1,19 @@
 startup();
 
+function assignLeftControl(left) {
+    left_control = takepicture(left);
+}
+
+function assignRightControl(right) {
+    right_control = takepicture(right);
+}
+
 left_canvas.addEventListener('click', function(ev) {
-    takepicture(this);
+    assignLeftControl(this);
     ev.preventDefault();
 }, false);
 
 right_canvas.addEventListener('click', function(ev) {
-    takepicture(this);
+    assignRightControl(this);
     ev.preventDefault();
 }, false);

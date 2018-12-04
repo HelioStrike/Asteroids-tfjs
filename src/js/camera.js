@@ -1,18 +1,12 @@
-var width = 224;
-var height = 224;
 
-var streaming = false;
-var video = null;
-var startbutton = null;
-var left_canvas = null;
-var right_canvas = null;
-
+//sets up camera and canvas
 function startup() {
     video = document.getElementById("video");
     startbutton = document.getElementById("startbutton");
     left_canvas = document.getElementById("left-control");
     right_canvas = document.getElementById("right-control");
     
+    //plays video
     navigator.mediaDevices.getUserMedia({video: true, audio: false}).then(
         function(stream) {
             video.srcObject = stream;
@@ -37,6 +31,7 @@ function startup() {
     clearphoto();
 }
 
+//clears canvases
 function clearphoto() {
     var context = left_canvas.getContext('2d');
     context.fillStyle = "#AAA";
@@ -47,15 +42,13 @@ function clearphoto() {
     context.fillRect(0, 0, right_canvas.width, right_canvas.height);
 }
 
+//returns snapshot tensor of camera
 function takepicture(ucanvas) {
     var context = ucanvas.getContext('2d');
     if(width && height) {
-        ucanvas.width = width;
-        ucanvas.height = height;
-        context.drawImage(video, 0, 0, width, height);
-        var img = new Image();
-        img.src = ucanvas.toDataURL('image/png').replace('image/png','image/octet-stream');
-        return tf.fromPixels(video);
+        var pix = tf.fromPixels(video);
+        tf.toPixels(pix, ucanvas);
+        return pix;
     } else {
         clearphoto();
     }

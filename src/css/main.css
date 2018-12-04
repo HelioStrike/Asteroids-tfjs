@@ -1,4 +1,8 @@
-* {
+#title {
+    color: white;
+}
+
+p {
     color: white;
 }
 
@@ -10,7 +14,7 @@ body {
 
 canvas {
     margin: 20px;
-    border: 2px solid white;
+    border: 2px solid rgb(255, 255, 255);
 }
 
 #wrapper {
