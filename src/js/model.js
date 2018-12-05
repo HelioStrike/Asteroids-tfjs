@@ -34,7 +34,7 @@ loadMobilenet().then(function(){
 });
 
 
-const LEARNING_RATE = 0.001;
+const LEARNING_RATE = 0.01;
 const optimizer = tf.train.sgd(LEARNING_RATE);
 
 
@@ -58,6 +58,9 @@ async function trainModel() {
     }
     console.log(losses);
 
+    console.log(paper);
+    window.gameStart();
+
     window.setInterval(function(){
         var pix = tf.reshape(tf.fromPixels(video), [1,224,224,3]);
         var ans = model.predict(pix).dataSync();
@@ -65,9 +68,11 @@ async function trainModel() {
         if(ans[0] > ans[1]) {
             left_canvas.className = "currmove";
             right_canvas.className = "";
+            curr_control = "left";
         } else {
             left_canvas.className = "";
             right_canvas.className = "currmove";
+            curr_control = "right";
         }
     }, 300);
 }
