@@ -56,9 +56,7 @@ async function trainModel() {
         loss_text.textContent = "Loss: " + loss;
         losses.push(loss);
     }
-    console.log(losses);
 
-    console.log(paper);
     window.gameStart();
 }
 

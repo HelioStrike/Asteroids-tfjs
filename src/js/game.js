@@ -16,7 +16,6 @@ game_over_text.fontSize = 30;
 
 function gameStart()
 {
-    console.log(game_canvas);
     
     player = new Rectangle();
     player.left = game_canvas.offsetWidth*start_x - player_width/2;
@@ -31,8 +30,8 @@ function gameStart()
 
     //move player
     game_intervals.push(window.setInterval(function(){
-        if(curr_control == "left") { window.moveLeft();}
-        else { window.moveRight();}
+        if(curr_control == "left") { moveLeft();}
+        else { moveRight();}
     }, 15));
 
     //spawn asteroids
@@ -122,7 +121,6 @@ function drawScore() {
 
 function checkGameOver() {
     for(var i = 0; i < asteroids.length; i++) {
-        console.log(player_path.intersects(asteroids[i][4]));
         if(player_path.intersects(asteroids[i][4])) { gameOver(); break;}
     }
 }
@@ -133,6 +131,3 @@ function gameOver() {
 }
 
 window.gameStart = gameStart;
-window.drawPlayer = drawPlayer;
-window.moveLeft = moveLeft;
-window.moveRight = moveRight;
