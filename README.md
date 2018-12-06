@@ -1,5 +1,5 @@
 # Asteroids-tfjs
-A simple game using tf.js, in the making.
+A simple game using tf.js.
 
 # Done:
 * Camera set up.
