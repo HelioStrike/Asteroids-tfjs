@@ -8,6 +8,7 @@ async function loadMobilenet() {
     model = tf.model({inputs: mobilenet.inputs, outputs: layer.output});
 };
 
+// load and compile model
 loadMobilenet().then(function(){
 
     model = tf.sequential(model);
@@ -34,14 +35,13 @@ loadMobilenet().then(function(){
 });
 
 
-const LEARNING_RATE = 0.01;
-const optimizer = tf.train.sgd(LEARNING_RATE);
+const optimizer = tf.train.sgd(learning_rate);
 
-
+//trains model and starts the game
 async function trainModel() {
     var losses = [];
     var controls = tf.concat([left_control.reshape([1,224,224,3]), right_control.reshape([1,224,224,3])]);
-    for (let i = 0; i < EPOCHS; i++) {
+    for (let i = 0; i < num_epochs; i++) {
         
         const history = await model.fit(
             controls,
@@ -60,21 +60,6 @@ async function trainModel() {
 
     console.log(paper);
     window.gameStart();
-
-    window.setInterval(function(){
-        var pix = tf.reshape(tf.fromPixels(video), [1,224,224,3]);
-        var ans = model.predict(pix).dataSync();
-        console.log(ans);
-        if(ans[0] > ans[1]) {
-            left_canvas.className = "currmove";
-            right_canvas.className = "";
-            curr_control = "left";
-        } else {
-            left_canvas.className = "";
-            right_canvas.className = "currmove";
-            curr_control = "right";
-        }
-    }, 300);
 }
 
 train_btn.addEventListener("click", trainModel);
