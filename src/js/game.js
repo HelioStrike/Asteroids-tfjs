@@ -1,6 +1,18 @@
+var game_intervals = [];
 var player = null;
 var player_path = null;
 var asteroids = [];
+
+var score = 0;
+var score_text = new PointText(new Point(60, 50));
+score_text.justification = 'center';
+score_text.fontSize = 20;
+score_text.fillColor = 'black';
+score_text.content = 'Score: ' + score;    
+
+var game_over_text = new PointText(new Point(game_canvas.offsetWidth/2, game_canvas.offsetHeight/2));
+game_over_text.justification = 'center';
+game_over_text.fontSize = 30;
 
 function gameStart()
 {
@@ -15,19 +27,25 @@ function gameStart()
     drawPlayer();
 
     //set player direction
-    window.setInterval(movePlayer, 300);
+    game_intervals.push(window.setInterval(movePlayer, 300));
 
     //move player
-    window.setInterval(function(){
+    game_intervals.push(window.setInterval(function(){
         if(curr_control == "left") { window.moveLeft();}
         else { window.moveRight();}
-    }, 15);
+    }, 15));
 
     //spawn asteroids
-    window.setInterval(spawnAsteroid, asteroid_spawn_rate*1000);
+    game_intervals.push(window.setInterval(spawnAsteroid, asteroid_spawn_rate*1000));
 
     //update and draw asteroids
-    window,setInterval(drawAsteroids, 15);
+    game_intervals.push(window,setInterval(drawAsteroids, 15));
+
+    //draw score
+    game_intervals.push(window,setInterval(drawScore, 1000));
+
+    //check game over
+    game_intervals.push(window,setInterval(checkGameOver, 200));
 }
 
 function drawPlayer()
@@ -75,6 +93,11 @@ function spawnAsteroid() {
 }
 
 function drawAsteroids() {
+    for(var i = 0; ; i++) {
+        if(i >= asteroids.length) { break;}
+        if(asteroids[i][1] >= game_canvas.offsetHeight + asteroid_height/2) { asteroids.splice(i, 1); i--;}
+    }
+
     for(var i = 0; i < asteroids.length; i++) {
         asteroids[i][1] += asteroid_speed;
         asteroids[i][2] += asteroid_rotate_speed;
@@ -89,6 +112,24 @@ function drawAsteroids() {
         asteroids[i][4].rotate(asteroids[i][2]);
         asteroids[i][4].fillColor = '#ff6961';
     }
+}
+
+function drawScore() {
+    score += 1;
+    score_text.content = 'Score: ' + score;    
+}
+
+
+function checkGameOver() {
+    for(var i = 0; i < asteroids.length; i++) {
+        console.log(player_path.intersects(asteroids[i][4]));
+        if(player_path.intersects(asteroids[i][4])) { gameOver(); break;}
+    }
+}
+
+function gameOver() {
+    game_over_text.content = "Game Over!!! Score: " + score;
+    while(game_intervals.length > 0) { clearInterval(game_intervals[0]); game_intervals.splice(0, 1);}
 }
 
 window.gameStart = gameStart;
