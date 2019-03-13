@@ -12,8 +12,10 @@ var right_control = null;
 var curr_control = "left";
 var train_btn = document.getElementById("train");
 var loss_text = document.getElementById("loss");
+var mode_dropdown = document.getElementById("gameMode");
+var gameMode = "NN";
 
-var learning_rate = 0.01;
+var learning_rate = 0.02;
 var num_epochs = 30;
 
 var start_x = 0.5;

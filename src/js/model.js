@@ -39,22 +39,27 @@ const optimizer = tf.train.sgd(learning_rate);
 
 //trains model and starts the game
 async function trainModel() {
-    var losses = [];
-    var controls = tf.concat([left_control.reshape([1,224,224,3]), right_control.reshape([1,224,224,3])]);
-    for (let i = 0; i < num_epochs; i++) {
-        
-        const history = await model.fit(
-            controls,
-            tf.tensor([[1,0],[0,1]]),
-            {
-                batchSize: 2,
-                epochs: 1
-            }
-        );
-      
-        const loss = history.history.loss[0];
-        loss_text.textContent = "Loss: " + loss;
-        losses.push(loss);
+    gameMode = mode_dropdown.options[mode_dropdown.selectedIndex].value;
+    console.log(gameMode);
+    if(gameMode == "NN") {
+        gameMode = "NN";
+        var losses = [];
+        var controls = tf.concat([left_control.reshape([1,224,224,3]), right_control.reshape([1,224,224,3])]);
+        for (let i = 0; i < num_epochs; i++) {
+            
+            const history = await model.fit(
+                controls,
+                tf.tensor([[1,0],[0,1]]),
+                {
+                    batchSize: 2,
+                    epochs: 1
+                }
+            );
+          
+            const loss = history.history.loss[0];
+            loss_text.textContent = "Loss: " + loss;
+            losses.push(loss);
+        }    
     }
 
     window.gameStart();

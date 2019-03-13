@@ -72,17 +72,32 @@ function moveRight()
 }
 
 function movePlayer() {
-    var pix = tf.reshape(tf.fromPixels(video), [1,224,224,3]);
-    var ans = model.predict(pix).dataSync();
-    console.log(ans);
-    if(ans[0] > ans[1]) {
-        left_canvas.className = "currmove";
-        right_canvas.className = "";
-        curr_control = "left";
+    if(gameMode == "NN") {
+        var pix = tf.reshape(tf.fromPixels(video), [1,224,224,3]);
+        var ans = model.predict(pix).dataSync();
+        console.log(ans);
+        if(ans[0] > ans[1]) {
+            left_canvas.className = "currmove";
+            right_canvas.className = "";
+            curr_control = "left";
+        } else {
+            left_canvas.className = "";
+            right_canvas.className = "currmove";
+            curr_control = "right";
+        }    
     } else {
-        left_canvas.className = "";
-        right_canvas.className = "currmove";
-        curr_control = "right";
+        var l = tf.metrics.meanSquaredError(tf.fromPixels(video), left_control).sum();
+        var r = tf.metrics.meanSquaredError(tf.fromPixels(video), right_control).sum();
+        console.log(l + " " + r);
+        if(l > r) {
+            left_canvas.className = "currmove";
+            right_canvas.className = "";
+            curr_control = "left";
+        } else {
+            left_canvas.className = "";
+            right_canvas.className = "currmove";
+            curr_control = "right";            
+        }
     }
 }
 
