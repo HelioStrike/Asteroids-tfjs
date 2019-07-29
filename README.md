@@ -1,2 +1,2 @@
 # Asteroids-tfjs
-A simple game using tf.js.
+A "Asteroids" game built using paper.js and tf.js.
